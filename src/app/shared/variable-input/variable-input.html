@@ -1,0 +1,65 @@
+<div class="wrap" [class.invalid]="invalid()">
+  <input
+    #field
+    type="text"
+    class="input" [class.one]="!showEmoji()"
+    [id]="inputId()"
+    [formControl]="control()"
+    [placeholder]="placeholder()"
+    [attr.maxlength]="maxLength()"
+    [attr.aria-describedby]="describedBy()"
+    [attr.aria-invalid]="invalid()"
+    autocomplete="off"
+  />
+
+  <div class="tools">
+    @if (showEmoji()) {
+      <button type="button" class="tool" aria-label="Insert emoji" aria-haspopup="true"
+        [attr.aria-expanded]="panel() === 'emoji'" [class.active]="panel() === 'emoji'" (click)="toggle('emoji')">
+        <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+          <circle cx="10" cy="10" r="7.2"/><path d="M6.8 11.6c.8 1.3 1.9 2 3.2 2s2.4-.7 3.2-2" stroke-linecap="round"/>
+          <circle cx="7.6" cy="8.2" r=".6" fill="currentColor"/><circle cx="12.4" cy="8.2" r=".6" fill="currentColor"/>
+        </svg>
+      </button>
+    }
+    <button type="button" class="tool" aria-label="Insert variable" aria-haspopup="true"
+      [attr.aria-expanded]="panel() === 'vars'" [class.active]="panel() === 'vars'" (click)="toggle('vars')">
+      <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+        <path d="M7.5 3.5c-1.7 0-2.5.8-2.5 2.5v1.6c0 1-.5 1.9-1.5 2.4 1 .5 1.5 1.4 1.5 2.4V14c0 1.7.8 2.5 2.5 2.5M12.5 3.5c1.7 0 2.5.8 2.5 2.5v1.6c0 1 .5 1.9 1.5 2.4-1 .5-1.5 1.4-1.5 2.4V14c0 1.7-.8 2.5-2.5 2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
+  @if (panel() === 'vars') {
+    <div class="popover vars" role="dialog" aria-label="Insert an attribute">
+      <label class="search">
+        <svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4" stroke-linecap="round"/></svg>
+        <input type="search" placeholder="Search {{ tab() === 'standard' ? 'Standard' : 'Custom' }} Attributes"
+          [value]="query()" (input)="query.set($any($event.target).value)" aria-label="Search attributes" />
+      </label>
+      <div class="tabs" role="tablist">
+        <button type="button" role="tab" [attr.aria-selected]="tab() === 'standard'" [class.on]="tab() === 'standard'" (click)="tab.set('standard'); query.set('')">Standard</button>
+        <button type="button" role="tab" [attr.aria-selected]="tab() === 'custom'" [class.on]="tab() === 'custom'" (click)="tab.set('custom'); query.set('')">Custom</button>
+      </div>
+      <ul class="list" role="list">
+        @for (a of visibleAttrs(); track a.label) {
+          <li>
+            <button type="button" class="opt" (click)="insertVariable(a.label)">
+              <span class="braces" aria-hidden="true">{{ '{ }' }}</span>{{ a.label }}
+            </button>
+          </li>
+        } @empty {
+          <li class="none">No attributes match “{{ query() }}”.</li>
+        }
+      </ul>
+    </div>
+  }
+
+  @if (panel() === 'emoji') {
+    <div class="popover emoji" role="dialog" aria-label="Insert an emoji">
+      @for (e of emojis; track e) {
+        <button type="button" class="emo" (click)="insert(e)" [attr.aria-label]="'Insert ' + e">{{ e }}</button>
+      }
+    </div>
+  }
+</div>

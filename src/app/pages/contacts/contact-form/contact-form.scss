@@ -1,0 +1,46 @@
+:host { display: block; }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.wide { grid-column: 1 / -1; }
+
+.field { min-width: 0; }
+label { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 500; }
+
+input:not([type='checkbox']), select {
+  width: 100%; height: 42px; padding: 0 12px; background: #fff; border: 1px solid var(--line); border-radius: 8px; font-size: 14px;
+  transition: border-color .15s, box-shadow .15s;
+  &::placeholder { color: #a9abc0; }
+  &:hover { border-color: #cfd2e6; }
+  &:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(123, 92, 240, .15); }
+  &.bad { border-color: var(--danger); &:focus { box-shadow: 0 0 0 3px rgba(214, 50, 74, .15); } }
+}
+
+.err { margin: 6px 0 0; font-size: 12px; color: var(--danger); }
+
+.switch {
+  display: flex; align-items: center; gap: 10px; margin: 2px 0 0; cursor: pointer; position: relative;
+  input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .track {
+    width: 38px; height: 22px; border-radius: 999px; background: #cfd2e6; position: relative; transition: background .15s; flex: none;
+    &::after { content: ''; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: transform .15s; }
+  }
+  input:checked + .track { background: var(--brand); &::after { transform: translateX(16px); } }
+  input:focus-visible + .track { outline: 2px solid var(--brand); outline-offset: 2px; }
+}
+
+.actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 40px; padding: 0 22px; border-radius: 999px; font-weight: 500;
+  &.ghost { background: #fff; border: 1px solid var(--line); color: var(--ink-2); &:hover:not(:disabled) { border-color: var(--brand); color: var(--brand); } }
+  &.solid { background: var(--brand); border: 1px solid var(--brand); color: #fff; &:hover:not(:disabled) { background: var(--brand-dark); } }
+  &:disabled { opacity: .65; cursor: not-allowed; }
+}
+
+.spin { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; animation: r .7s linear infinite; }
+@keyframes r { to { transform: rotate(360deg); } }
+
+@media (max-width: 520px) {
+  .grid { grid-template-columns: 1fr; }
+  .actions .btn { flex: 1; }
+}

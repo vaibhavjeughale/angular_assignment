@@ -1,0 +1,69 @@
+<form [formGroup]="form" (ngSubmit)="submit()" novalidate class="form">
+  <div class="grid">
+    <div class="field">
+      <label for="first_name">First name</label>
+      <input id="first_name" type="text" formControlName="first_name" autocomplete="given-name" [class.bad]="message('first_name')" [attr.aria-invalid]="!!message('first_name')" aria-describedby="first_name-e" />
+      @if (message('first_name'); as m) { <p class="err" id="first_name-e" role="alert">{{ m }}</p> }
+    </div>
+
+    <div class="field">
+      <label for="last_name">Last name</label>
+      <input id="last_name" type="text" formControlName="last_name" autocomplete="family-name" [class.bad]="message('last_name')" [attr.aria-invalid]="!!message('last_name')" aria-describedby="last_name-e" />
+      @if (message('last_name'); as m) { <p class="err" id="last_name-e" role="alert">{{ m }}</p> }
+    </div>
+
+    <div class="field wide">
+      <label for="emailId">Email</label>
+      <input id="emailId" type="email" formControlName="emailId" autocomplete="email" inputmode="email" placeholder="name@example.com" [class.bad]="message('emailId')" [attr.aria-invalid]="!!message('emailId')" aria-describedby="emailId-e" />
+      @if (message('emailId'); as m) { <p class="err" id="emailId-e" role="alert">{{ m }}</p> }
+    </div>
+
+    <div class="field">
+      <label for="mobilenumber">Mobile number</label>
+      <input id="mobilenumber" type="tel" formControlName="mobilenumber" inputmode="numeric" maxlength="10" autocomplete="tel-national" placeholder="9876543210" (input)="digitsOnly('mobilenumber')" [class.bad]="message('mobilenumber')" [attr.aria-invalid]="!!message('mobilenumber')" aria-describedby="mobilenumber-e" />
+      @if (message('mobilenumber'); as m) { <p class="err" id="mobilenumber-e" role="alert">{{ m }}</p> }
+    </div>
+
+    <div class="field">
+      <label for="age">Age</label>
+      <input id="age" type="number" formControlName="age" min="18" max="100" inputmode="numeric" [class.bad]="message('age')" [attr.aria-invalid]="!!message('age')" aria-describedby="age-e" />
+      @if (message('age'); as m) { <p class="err" id="age-e" role="alert">{{ m }}</p> }
+    </div>
+
+    <div class="field wide">
+      <label for="gender">Gender</label>
+      <select id="gender" formControlName="gender" [class.bad]="message('gender')" [attr.aria-invalid]="!!message('gender')" aria-describedby="gender-e">
+        <option value="" disabled>Select gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+      @if (message('gender'); as m) { <p class="err" id="gender-e" role="alert">{{ m }}</p> }
+    </div>
+
+    <div class="field">
+      <label for="pan_no">PAN</label>
+      <input id="pan_no" type="text" formControlName="pan_no" maxlength="10" autocapitalize="characters" placeholder="ABCDE1234F" (input)="upper('pan_no')" [class.bad]="message('pan_no')" [attr.aria-invalid]="!!message('pan_no')" aria-describedby="pan_no-e" />
+      @if (message('pan_no'); as m) { <p class="err" id="pan_no-e" role="alert">{{ m }}</p> }
+    </div>
+
+    <div class="field">
+      <label for="adhaar_no">Aadhaar number</label>
+      <input id="adhaar_no" type="text" formControlName="adhaar_no" inputmode="numeric" maxlength="12" placeholder="12 digits" (input)="digitsOnly('adhaar_no')" [class.bad]="message('adhaar_no')" [attr.aria-invalid]="!!message('adhaar_no')" aria-describedby="adhaar_no-e" />
+      @if (message('adhaar_no'); as m) { <p class="err" id="adhaar_no-e" role="alert">{{ m }}</p> }
+    </div>
+
+    <label class="switch wide" for="status">
+      <input id="status" type="checkbox" formControlName="status" role="switch" />
+      <span class="track" aria-hidden="true"></span>
+      <span>Active contact</span>
+    </label>
+  </div>
+
+  <div class="actions">
+    <button type="button" class="btn ghost" (click)="cancel.emit()" [disabled]="saving()">Cancel</button>
+    <button type="submit" class="btn solid" [disabled]="saving()">
+      @if (saving()) { <span class="spin" aria-hidden="true"></span> Saving… } @else { {{ contact() ? 'Save changes' : 'Add contact' }} }
+    </button>
+  </div>
+</form>

@@ -1,0 +1,1 @@
+{ "buildCommand": "npm run build", "outputDirectory": "dist/angular-assignment/browser", "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }] }

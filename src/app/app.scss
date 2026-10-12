@@ -1,0 +1,16 @@
+.skip { position: absolute; left: -999px; top: 8px; background: #fff; padding: 8px 12px; border-radius: 8px; z-index: 200; &:focus { left: 8px; } }
+
+.bar { background: #fff; border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 20; }
+.inner { max-width: 1120px; margin: 0 auto; padding: 0 16px; height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand { font-weight: 600; font-size: 17px; color: var(--ink); text-decoration: none; letter-spacing: -.01em; }
+nav { display: flex; gap: 4px; }
+nav a {
+  padding: 8px 14px; border-radius: 999px; color: var(--ink-2); text-decoration: none; font-weight: 500;
+  &:hover { background: var(--brand-tint); color: var(--brand-dark); }
+  &.on { background: var(--brand-tint); color: var(--brand-dark); }
+}
+
+@media (max-width: 480px) {
+  .inner { height: auto; padding: 10px 12px; flex-wrap: wrap; }
+  nav a { padding: 6px 12px; }
+}
