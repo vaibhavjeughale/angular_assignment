@@ -5,13 +5,14 @@ import { Contact, ContactPayload } from '../../core/contact.model';
 import { ContactService } from '../../core/contact.service';
 import { ToastService } from '../../shared/toast/toast.service';
 import { ContactForm } from './contact-form/contact-form';
+import { AddContactForm } from '../../add-contact-form/add-contact-form';
 
 type StatusFilter = 'all' | 'active' | 'inactive';
 type SortKey = 'newest' | 'oldest' | 'name';
 
 @Component({
   selector: 'app-contacts',
-  imports: [FormsModule, DatePipe, ContactForm],
+  imports: [FormsModule, DatePipe, ContactForm,AddContactForm],
   templateUrl: './contacts.html',
   styleUrl: './contacts.scss',
 })

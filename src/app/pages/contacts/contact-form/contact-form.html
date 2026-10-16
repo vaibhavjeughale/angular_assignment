@@ -15,7 +15,13 @@
     <div class="field wide">
       <label for="emailId">Email</label>
       <input id="emailId" type="email" formControlName="emailId" autocomplete="email" inputmode="email" placeholder="name@example.com" [class.bad]="message('emailId')" [attr.aria-invalid]="!!message('emailId')" aria-describedby="emailId-e" />
-      @if (message('emailId'); as m) { <p class="err" id="emailId-e" role="alert">{{ m }}</p> }
+      <!-- @if (message('emailId'); as m) { <p class="err" id="emailId-e" role="alert">{{ m }}</p> } -->
+       @if (form.controls['emailId'].touched &&
+     form.controls['emailId'].hasError('required')) {
+  <div class="invalid-feedback d-block">
+    Email is required is important
+  </div>
+}
     </div>
 
     <div class="field">
@@ -63,6 +69,7 @@
   <div class="actions">
     <button type="button" class="btn ghost" (click)="cancel.emit()" [disabled]="saving()">Cancel</button>
     <button type="submit" class="btn solid" [disabled]="saving()">
+   
       @if (saving()) { <span class="spin" aria-hidden="true"></span> Saving… } @else { {{ contact() ? 'Save changes' : 'Add contact' }} }
     </button>
   </div>

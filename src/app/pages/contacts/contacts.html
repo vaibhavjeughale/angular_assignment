@@ -97,6 +97,7 @@
 
 <!-- Add / edit dialog -->
 @if (formOpen()) {
+  <app-add-contact-form></app-add-contact-form>
   <div class="scrim" (click)="closeForm()">
     <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dlg-title" (click)="$event.stopPropagation()">
       <header>
